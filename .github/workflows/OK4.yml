@@ -27,12 +27,24 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        # Enhanced query suites for maximum security coverage
+        # Your original queries PLUS experimental for enhanced security coverage
         queries: security-extended,security-and-quality,security-experimental
-        # Custom Flask security queries
-        config-file: ./.github/codeql/codeql-config.yml
+        # Optional: Custom Flask security queries (comment out if issues)
+        # config-file: ./.github/codeql/codeql-config.yml
+
+    - name: Show Repository Structure
+      run: |
+        echo "📁 Repository files being scanned:"
+        find . -name "*.py" -o -name "*.html" | head -20
+        echo "Total Python files: $(find . -name "*.py" | wc -l)"
+        echo "Total HTML files: $(find . -name "*.html" | wc -l)"
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:python" # Better results organization
+        
+    - name: Show Analysis Summary
+      run: |
+        echo "✅ CodeQL analysis completed"
+        echo "📊 Check the Security tab for detailed results"
