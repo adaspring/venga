@@ -30,7 +30,7 @@ jobs:
         # Your original queries PLUS experimental for enhanced security coverage
         queries: security-extended,security-and-quality,security-experimental
         # Optional: Custom Flask security queries (comment out if issues)
-        # config-file: ./.github/codeql/codeql-config.yml
+        config-file: ./.github/codeql/codeql-config.yml
 
     - name: Show Repository Structure
       run: |
