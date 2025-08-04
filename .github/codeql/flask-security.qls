@@ -1,0 +1,48 @@
+# Flask Security Query Suite
+# Save as: .github/codeql/flask-security.qls
+
+description: "Critical security queries for Flask web applications"
+
+# Get all Python security queries
+- qlpack: codeql/python-queries
+
+# Focus on the most critical Flask web app vulnerabilities
+- include:
+    tags contain: security
+
+# Specifically include these critical attack vectors for your Flask app:
+
+# 1. Web Application Attacks
+- include:
+    id:
+      - py/reflective-xss               # XSS attacks
+      - py/flask-debug-true             # Flask debug mode
+      - py/jinja2-autoescape-false      # Template injection
+      - py/csrf-protection-disabled     # CSRF attacks
+
+# 2. File Upload Security (critical for your app)
+- include:
+    id:
+      - py/path-injection               # Path traversal
+      - py/tarslip                      # Zip slip attacks
+      - py/insecure-temporary-file      # Temp file issues
+
+# 3. Data Disclosure (your priority)
+- include:
+    id:
+      - py/clear-text-logging-sensitive-data    # Logging secrets
+      - py/clear-text-storage-sensitive-data    # Storing secrets
+      - py/stack-trace-exposure                 # Exception info leak
+
+# 4. Input Validation
+- include:
+    id:
+      - py/code-injection               # Code injection
+      - py/command-injection            # OS command injection
+      - py/sql-injection                # SQL injection
+
+# 5. Crypto & Session Security
+- include:
+    id:
+      - py/insecure-cookie              # Session cookie security
+      - py/weak-cryptographic-algorithm # Weak crypto
