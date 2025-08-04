@@ -1,0 +1,24 @@
+# CodeQL Configuration for Flask Web Application Security
+# Save as: .github/codeql/codeql-config.yml
+
+name: "Flask Security Analysis"
+
+query-filters:
+  # Include most critical security queries for Flask web apps
+  - include:
+      tags contain: security
+  - include:
+      tags contain: external/cwe/cwe-079  # XSS
+  - include:
+      tags contain: external/cwe/cwe-022  # Path Traversal
+  - include:
+      tags contain: external/cwe/cwe-352  # CSRF
+  - include:
+      tags contain: external/cwe/cwe-094  # Code Injection
+  - include:
+      tags contain: external/cwe/cwe-312  # Sensitive Info Disclosure
+
+queries:
+  # Additional Flask-specific security queries
+  - name: flask-security-suite
+    uses: ./.github/codeql/flask-security.qls
